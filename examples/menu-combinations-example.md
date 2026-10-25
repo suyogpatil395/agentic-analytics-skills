@@ -3,7 +3,7 @@
 **Question:** *"Which combinations of the Special bar sold most this month, and how did each topping do?"*
 
 ```text
-views   → order_item_modifier_metrics + order_item_metrics
+views   → item_options_metrics + item_sales_metrics
 method  → group modifiers per item line → pivot Base / Topping / Filling → count
 checks  → topping quantities sum to 812 = item total ✓ · revenue sums to ₹1,26,840 ✓
 ```

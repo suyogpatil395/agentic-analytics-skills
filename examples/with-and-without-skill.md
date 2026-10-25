@@ -9,9 +9,9 @@
 ```text
 agent → list_metrics_views                      (8 views returned)
 agent → get_metrics_view orders_metrics
-agent → get_metrics_view order_item_metrics
-agent → get_metrics_view top_selling_items_metrics
-agent → query_metrics_view order_item_metrics   sum(total_sales) by channel   ← wrong view, gross measure
+agent → get_metrics_view item_sales_metrics
+agent → get_metrics_view best_sellers_metrics
+agent → query_metrics_view item_sales_metrics   sum(total_sales) by channel   ← wrong view, gross measure
 agent → query_metrics_view orders_metrics       … no status filter            ← cancelled bills included
 agent → query_metrics_view orders_metrics       … UTC dates                   ← late-night orders shifted
 … 9 tool calls · ~41k tokens
@@ -26,7 +26,7 @@ Problems: wrong measure, cancelled orders counted, wrong day boundaries, raw JSO
 
 ```text
 router      → orders_metrics (net sales + channel)
-dictionary  → net_sales_measure, total_orders_measure, AOV
+dictionary  → net_revenue, order_count, AOV
 filters     → order_status = completed · branch_name = Baner · store-local dates
 agent → query_metrics_view orders_metrics      (1 call)
 self-check  → channel rows sum to total ✓

@@ -1,6 +1,6 @@
 ---
 name: menu-combinations
-description: Answers build-your-own menu questions for a dessert brand: which Base + Topping + Filling combinations sold, how many of each option, attach rates and branch splits, using the item and modifier metrics views over MCP. Use whenever the user asks "which combination sold", "how many with chocolate topping", option popularity, or variant (Classic / Special / Turbo) breakdowns.
+description: Answers build-your-own menu questions for a dessert brand: which Base + Topping + Filling combinations sold, how many of each option, attach rates and branch splits, using the item and modifier metrics views over MCP. Use whenever the user asks "which combination sold", "how many with chocolate topping", option popularity, or variant (Classic / Special / Deluxe) breakdowns.
 ---
 
 # Menu Combinations
@@ -10,7 +10,7 @@ Build-your-own products are sold as **one item line + several modifier lines**
 option reports that always reconcile.
 
 ## §1 Scope
-- Views: `order_item_metrics` (item lines) and `order_item_modifier_metrics`
+- Views: `item_sales_metrics` (item lines) and `item_options_metrics`
   (modifier lines). Default filters: completed orders, `is_deleted = 0`.
 - Row-level security already limits data to the user's brand.
 - **Never show menu list prices** (modifier upcharges) in sold-data output; show
@@ -28,7 +28,7 @@ descending, every row shown (no "top N" unless asked):
 2. Pivot per item line → one row per line with its Base, Topping, Filling
    (`—` when an option wasn't chosen).
 3. Count identical combinations; weight by item quantity.
-4. Revenue per line = the line's own charged total (`item_line_revenue_measure`).
+4. Revenue per line = the line's own charged total (`line_revenue`).
 
 ## §4 Mandatory self-check
 - In **each** option table, the Quantity column must sum to the item's total

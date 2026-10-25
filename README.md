@@ -105,10 +105,10 @@ flowchart TB
     subgraph Data["Governed data platform"]
         MCP[MCP server<br/>OAuth per user]
         MV1[orders_metrics]
-        MV2[order_payments_metrics]
-        MV3[order_item_metrics]
-        MV4[order_item_modifier_metrics]
-        MV5[top_selling_items_metrics]
+        MV2[payments_metrics]
+        MV3[item_sales_metrics]
+        MV4[item_options_metrics]
+        MV5[best_sellers_metrics]
         RLS{{Row-level security}}
         DB[(POS data → SQL models)]
     end
@@ -190,10 +190,10 @@ description: Answers restaurant sales, orders, channel, payment, item, modifier 
 | The question is about… | View | Time column |
 |---|---|---|
 | revenue, net sales, orders, AOV, channels, branches, hours | `orders_metrics` | `order_timestamp` (store-local) |
-| payment methods, tender | `order_payments_metrics` | `order_timestamp` |
-| items sold, quantity, categories | `order_item_metrics` | `order_timestamp` |
-| toppings, extras, add-ons | `order_item_modifier_metrics` | `order_timestamp` |
-| "top selling", best sellers | `top_selling_items_metrics` | `effective_timestamp` |
+| payment methods, tender | `payments_metrics` | `order_timestamp` |
+| items sold, quantity, categories | `item_sales_metrics` | `order_timestamp` |
+| toppings, extras, add-ons | `item_options_metrics` | `order_timestamp` |
+| "top selling", best sellers | `best_sellers_metrics` | `sale_timestamp` |
 </details>
 
 <details>
@@ -201,11 +201,11 @@ description: Answers restaurant sales, orders, channel, payment, item, modifier 
 
 | User says | Measure | Default filter |
 |---|---|---|
-| net sales, revenue, ingresos | `net_sales_measure` | completed orders |
-| sales, gross sales | `total_sales_measure` | completed orders |
-| orders, tickets | `total_orders_measure` | completed orders |
-| tender, paid by | `total_payment_amount_measure` | completed + paid |
-| extras, toppings | `modifier_quantity_measure` | completed, not deleted |
+| net sales, revenue, ingresos | `net_revenue` | completed orders |
+| sales, gross sales | `gross_revenue` | completed orders |
+| orders, tickets | `order_count` | completed orders |
+| tender, paid by | `amount_paid` | completed + paid |
+| extras, toppings | `option_units` | completed, not deleted |
 </details>
 
 <details>
@@ -319,11 +319,11 @@ flowchart LR
 ```json
 {
   "metrics_view": "orders_metrics",
-  "measures": [{ "name": "net_sales_measure" }, { "name": "total_orders_measure" }, { "name": "average_order_value_measure" }],
+  "measures": [{ "name": "net_revenue" }, { "name": "order_count" }, { "name": "avg_order_value" }],
   "dimensions": [{ "name": "channel" }],
   "where": { "and": [{ "eq": ["branch_name", "Baner"] }, { "eq": ["order_status", "completed"] }] },
   "time_range": { "start": "2026-10-19", "end": "2026-10-26" },
-  "sort": [{ "name": "net_sales_measure", "desc": true }],
+  "sort": [{ "name": "net_revenue", "desc": true }],
   "limit": 20
 }
 ```

@@ -4,7 +4,7 @@
 Some products allow two toppings. Join the options alphabetically
 (`Dark chocolate + Sprinkles`) so the same pair always forms the same combination.
 
-## Variants (Classic / Special / Turbo)
+## Variants (Classic / Special / Deluxe)
 Variant is part of the item name, not a modifier. Add a `Variant` column when the
 user asks, or when one brand sells several variants in scope.
 

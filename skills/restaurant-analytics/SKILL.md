@@ -42,10 +42,10 @@ come from a metrics view and follow the rules below.
 | The question is about… | Use view | Time column |
 |---|---|---|
 | revenue, net sales, orders, AOV, discounts, channels, branches, hours, kitchen time | `orders_metrics` | `order_timestamp` (store-local) |
-| payment methods, tender, cash vs card vs UPI, refunds | `order_payments_metrics` | `order_timestamp` |
-| items sold, quantity, item revenue, categories | `order_item_metrics` | `order_timestamp` |
-| toppings, extras, add-ons, modifiers, build-your-own options | `order_item_modifier_metrics` | `order_timestamp` |
-| "top selling", best sellers, rank of items | `top_selling_items_metrics` | `effective_timestamp` |
+| payment methods, tender, cash vs card vs UPI, refunds | `payments_metrics` | `order_timestamp` |
+| items sold, quantity, item revenue, categories | `item_sales_metrics` | `order_timestamp` |
+| toppings, extras, add-ons, modifiers, build-your-own options | `item_options_metrics` | `order_timestamp` |
+| "top selling", best sellers, rank of items | `best_sellers_metrics` | `sale_timestamp` |
 
 If a question needs two views (e.g. *net sales and top items*), answer each part
 from its own view and present them as separate tables. Never join them yourself.
@@ -54,16 +54,16 @@ from its own view and present them as separate tables. Never join them yourself.
 
 | User says | Measure | Notes |
 |---|---|---|
-| sales, venta, gross sales | `total_sales_measure` | gross, before discounts |
-| **net sales**, revenue, ingresos, total revenue | `net_sales_measure` | after promo & points discounts. **Default for "revenue".** |
-| orders, bills, tickets | `total_orders_measure` | |
-| AOV, average ticket | `average_order_value_measure` | |
-| discount | `total_discount_measure` | |
-| prep time, kitchen time | `avg_preparation_time_measure` | |
-| turnaround, SLA, total time | `avg_total_time_measure` | |
-| items, quantity, units | `total_quantity_sold_measure` | item view |
-| tender, paid by | `total_payment_amount_measure` by `payment_method` | payments view |
-| extras, toppings | `modifier_quantity_measure` | modifier view |
+| sales, venta, gross sales | `gross_revenue` | gross, before discounts |
+| **net sales**, revenue, ingresos, total revenue | `net_revenue` | after promo & points discounts. **Default for "revenue".** |
+| orders, bills, tickets | `order_count` | |
+| AOV, average ticket | `avg_order_value` | |
+| discount | `discount_total` | |
+| prep time, kitchen time | `avg_prep_minutes` | |
+| turnaround, SLA, total time | `avg_turnaround_minutes` | |
+| items, quantity, units | `units_sold` | item view |
+| tender, paid by | `amount_paid` by `payment_method` | payments view |
+| extras, toppings | `option_units` | modifier view |
 
 **Default filters (always apply unless the user asks otherwise):**
 - orders / payments / modifiers: `order_status = 'completed'`
