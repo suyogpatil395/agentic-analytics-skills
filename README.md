@@ -89,6 +89,12 @@ Every guess is a chance to be confidently wrong, and a different AI tool guesses
 
 ## 🏗️ Architecture
 
+<p align="center">
+  <img src="./assets/skill-architecture.gif" width="100%" alt="Animated skill architecture: a question from Claude, ChatGPT, Gemini or Grok loads the skill progressively (description, SKILL.md sections, references only when needed), goes through the MCP server and row-level security to one metrics view, and comes back as a reconciled table" />
+</p>
+
+<sub>One question end to end: the skill loads in levels (description, then SKILL.md, references only when needed), routes to one view, runs one query through MCP under the user's own login, and self-checks the table before answering. The same connector and skill then give the same answer in ChatGPT, Gemini and Grok. Figures are synthetic.</sub>
+
 ```mermaid
 flowchart TB
     subgraph Clients["AI assistants (client's choice)"]
@@ -287,6 +293,12 @@ flowchart LR
     E -- no --> B
     E -- yes --> F[Combination · Base · Topping<br/>Filling · Branch tables]
 ```
+
+<p align="center">
+  <img src="./assets/menu-combinations-flow.gif" width="100%" alt="Animated menu combinations method: modifier lines grouped per item line, pivoted into Base, Topping and Filling, counted into a combination table, then quantity and revenue reconciled to the item totals" />
+</p>
+
+<sub>The Menu Combinations method on the synthetic example from <a href="examples/menu-combinations-example.md"><code>examples/menu-combinations-example.md</code></a>: group, pivot, count, then reconcile Quantity (812) and Revenue (₹1,26,840).</sub>
 
 ### C · Shipping a new business rule
 
